@@ -14,95 +14,122 @@ Vec4::Vec4(const Vec3& v, float w) : x(v.x), y(v.y), z(v.z), w(w) {}
 
 // Arithmetic operators
 Vec4 Vec4::operator+(const Vec4& v) const {
-    // TODO: Implement addition
-    return Vec4();
+    return Vec4(x + v.x, y + v.y, z + v.z, w + v.w);
 }
 
 Vec4 Vec4::operator-(const Vec4& v) const {
-    // TODO: Implement subtraction
-    return Vec4();
+    return Vec4(x-v.x,y-v.y,z-v.z,w-v.w);
 }
 
 Vec4 Vec4::operator*(float scalar) const {
-    // TODO: Implement scalar multiplication
-    return Vec4();
+    return Vec4(x*scalar,y*scalar,z*scalar,w*scalar);
 }
 
 Vec4 Vec4::operator/(float scalar) const {
-    // TODO: Implement scalar division
-    return Vec4();
+    return Vec4(x/scalar,y/scalar,z/scalar,w/scalar);
 }
 
 Vec4 Vec4::operator-() const {
-    // TODO: Implement negation
-    return Vec4();
+    return Vec4(-x,-y,-z,-w);
 }
 
 Vec4& Vec4::operator+=(const Vec4& v) {
-    // TODO: Implement compound addition
+    x += v.x;
+    y += v.y;
+    z += v.z;
+    w += v.w;
     return *this;
 }
 
 Vec4& Vec4::operator-=(const Vec4& v) {
-    // TODO: Implement compound subtraction
+    x -= v.x;
+    y -= v.y;
+    z -= v.z;
+    w -= v.w;
     return *this;
 }
 
 Vec4& Vec4::operator*=(float scalar) {
-    // TODO: Implement compound scalar multiplication
+    x *= scalar;
+    y *= scalar;
+    z *= scalar;
+    w *= scalar;
     return *this;
 }
 
 Vec4& Vec4::operator/=(float scalar) {
-    // TODO: Implement compound scalar division
+    x /= scalar;
+    y /= scalar;
+    z /= scalar;
+    w /= scalar;
     return *this;
 }
 
 // Comparison operators
 bool Vec4::operator==(const Vec4& v) const {
-    // TODO: Implement equality
-    return false;
+    return (floatEqual(x,v.x) && floatEqual(y,v.y) && floatEqual(z,v.z) && floatEqual(w,v.w));
 }
 
 bool Vec4::operator!=(const Vec4& v) const {
-    return !(*this == v);
+    return !(floatEqual(x,v.x) && floatEqual(y,v.y) && floatEqual(z,v.z) && floatEqual(w,v.w));
 }
 
 // Vector operations
 float Vec4::dot(const Vec4& v) const {
-    // TODO: Implement dot product
-    return 0.0f;
+    return x*v.x + y*v.y + z*v.z + w*v.w;
 }
 
 float Vec4::length() const {
-    // TODO: Implement length
-    return 0.0f;
+    return sqrt(x*x + y*y + z*z + w*w);
 }
 
 float Vec4::lengthSquared() const {
-    // TODO: Implement squared length
-    return 0.0f;
+    return x*x + y*y + z*z + w*w;
 }
 
 Vec4 Vec4::normalized() const {
-    // TODO: Implement normalization
-    return Vec4();
+    float len = length();
+    return Vec4(x/len, y/len, z/len, w/len);
 }
 
 void Vec4::normalize() {
-    // TODO: Implement in-place normalization
+    float len = length();
+    x /= len;
+    y /= len;
+    z /= len;
+    w /= len;
 }
 
 // Component access
 float Vec4::operator[](int i) const {
-    // TODO: Implement const array-style access
-    return 0.0f;
+    switch(i) {
+        case 0:
+            return x;
+        case 1:
+            return y;
+        case 2:
+            return z;
+        case 3:
+            return w;
+        default:
+            return 0.0f;
+    }
 }
 
 float& Vec4::operator[](int i) {
-    // TODO: Implement mutable array-style access
-    static float dummy = 0.0f;
-    return dummy;
+    switch(i) {
+        case 0:
+            return x;
+        case 1:
+            return y;
+        case 2:
+            return z;
+        case 3:
+            return w;
+        default:
+            static float dummy = 0.0f;
+            return dummy;
+    }
 }
 
 // Conversion

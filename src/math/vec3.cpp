@@ -12,100 +12,121 @@ Vec3::Vec3(float scalar) : x(scalar), y(scalar), z(scalar) {}
 
 // Arithmetic operators
 Vec3 Vec3::operator+(const Vec3& v) const {
-    // TODO: Implement addition
-    return Vec3();
+    return Vec3(x + v.x, y + v.y, z + v.z);
 }
 
 Vec3 Vec3::operator-(const Vec3& v) const {
-    // TODO: Implement subtraction
-    return Vec3();
+    return Vec3(x-v.x,y-v.y,z-v.z);
 }
 
 Vec3 Vec3::operator*(float scalar) const {
-    // TODO: Implement scalar multiplication
-    return Vec3();
+    return Vec3(x*scalar,y*scalar,z*scalar);
 }
 
 Vec3 Vec3::operator/(float scalar) const {
-    // TODO: Implement scalar division
-    return Vec3();
+    return Vec3(x/scalar,y/scalar,z/scalar);
 }
 
 Vec3 Vec3::operator-() const {
-    // TODO: Implement negation
-    return Vec3();
+    return Vec3(-x,-y,-z);
 }
 
 Vec3& Vec3::operator+=(const Vec3& v) {
-    // TODO: Implement compound addition
+    x += v.x;
+    y += v.y;
+    z += v.z;
     return *this;
 }
 
 Vec3& Vec3::operator-=(const Vec3& v) {
-    // TODO: Implement compound subtraction
+    x -= v.x;
+    y -= v.y;
+    z -= v.z;
     return *this;
 }
 
 Vec3& Vec3::operator*=(float scalar) {
-    // TODO: Implement compound scalar multiplication
+    x *= scalar;
+    y *= scalar;
+    z *= scalar;
     return *this;
 }
 
 Vec3& Vec3::operator/=(float scalar) {
-    // TODO: Implement compound scalar division
+    x /= scalar;
+    y /= scalar;
+    z /= scalar;
     return *this;
 }
 
 // Comparison operators
 bool Vec3::operator==(const Vec3& v) const {
-    // TODO: Implement equality (consider using floatEqual for robustness)
-    return false;
+    return (floatEqual(x,v.x) && floatEqual(y,v.y) && floatEqual(z,v.z));
 }
 
 bool Vec3::operator!=(const Vec3& v) const {
-    return !(*this == v);
+    return !(floatEqual(x,v.x) && floatEqual(y,v.y) && floatEqual(z,v.z));
 }
 
 // Vector operations
 float Vec3::dot(const Vec3& v) const {
-    // TODO: Implement dot product
-    return 0.0f;
+    return x*v.x + y*v.y + z*v.z;
 }
 
 Vec3 Vec3::cross(const Vec3& v) const {
-    // TODO: Implement cross product
-    return Vec3();
+    Vec3 result = Vec3();
+    result.x = this->y * v.z - this->z * v.y;
+    result.y = this->z * v.x - this->x * v.z;
+    result.z = this->x * v.y - this->y * v.x;
+    return result;
 }
 
 float Vec3::length() const {
-    // TODO: Implement length (magnitude)
-    return 0.0f;
+    return sqrt(x*x + y*y + z*z);
 }
 
 float Vec3::lengthSquared() const {
-    // TODO: Implement squared length (more efficient, no sqrt)
-    return 0.0f;
+    return x*x + y*y + z*z;
 }
 
 Vec3 Vec3::normalized() const {
-    // TODO: Implement normalization (return normalized copy)
-    return Vec3();
+    float len = length();
+    return Vec3(x/len, y/len, z/len);
 }
 
 void Vec3::normalize() {
-    // TODO: Implement in-place normalization
+    float len = length();
+    x /= len;
+    y /= len;
+    z /= len;
 }
 
 // Component access
 float Vec3::operator[](int i) const {
-    // TODO: Implement const array-style access
-    return 0.0f;
+    switch(i) {
+        case 0:
+            return x;
+        case 1:
+            return y;
+        case 2:
+            return z;
+        default:
+            return 0.0f;
+    }
 }
 
 float& Vec3::operator[](int i) {
-    // TODO: Implement mutable array-style access
-    static float dummy = 0.0f;
-    return dummy;
+    switch(i) {
+        case 0:
+            return x;
+        case 1:
+            return y;
+        case 2:
+            return z;
+        default:
+            static float dummy = 0.0f;
+            return dummy;
+    }
 }
 
 // Static utility methods
@@ -153,13 +174,15 @@ Vec3 normalize(const Vec3& v) {
 }
 
 Vec3 lerp(const Vec3& a, const Vec3& b, float t) {
-    // TODO: Implement linear interpolation
-    return Vec3();
+    return Vec3(
+        a.x + t * (b.x - a.x),
+        a.y + t * (b.y - a.y),
+        a.z + t * (b.z - a.z)
+    );
 }
 
 Vec3 reflect(const Vec3& incident, const Vec3& normal) {
-    // TODO: Implement reflection: incident - 2 * dot(incident, normal) * normal
-    return Vec3();
+    return incident - 2.0f * dot(incident, normal) * normal;
 }
 
 } // namespace grl
